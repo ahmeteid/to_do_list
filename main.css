@@ -77,14 +77,13 @@ body {
     display: block;
     background-color: #fff;
     padding: 10px;
-    text-transform: capitalize;
 }
 
 .todo-container .tasks-content> span:not(:last-child) {
     margin-bottom: 10px;
 }
 
-.todo-container .tasks-content .tasks-box .delete {
+.todo-container .tasks-content .task-box .delete {
     float: right;
     background-color: #e91e63;
     padding: 4px 10px;
@@ -100,7 +99,7 @@ body {
     text-transform: capitalize;
 }
 
-.todo-container .tasks-content .tasks-box.finished {
+.todo-container .tasks-content .task-box.finished {
     text-decoration: line-through;
 }
 

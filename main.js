@@ -2,7 +2,6 @@
 let theInput = document.querySelector(".add-task input");
 let theAddButton = document.querySelector(".add-task .plus");
 let tasksContainer = document.querySelector(".tasks-content");
-let noTasksMsg =document.querySelector(".no-tasks-message");
 let tasksCount = document.querySelector(".tasks-count span");
 let tasksCompleted = document.querySelector(".tasks-completed span");
 
@@ -21,9 +20,16 @@ theAddButton.onclick = function() {
         Swal.fire("Empty Value");
 
     } else {
+        
+        let noTasksMsg =document.querySelector(".no-tasks-message");
 
-        // Remove no taske message
-        noTasksMsg.remove();
+        // Check if span with no tasks message is exist
+        if(document.body.contains(document.querySelector(".no-tasks-message"))) {
+
+            // Remove no taske message
+            noTasksMsg.remove();
+        }
+
 
         // Create span Element
         let mainSpan = document.createElement("span");
@@ -59,8 +65,65 @@ theAddButton.onclick = function() {
         // focus on field
         theInput.focus();
 
+        // Calculate Tasks
+        calculateTasks();
+
     }
     
 }
 
+document.addEventListener("click", function(event) {
 
+    // Delete Task
+    if(event.target.className == "delete") {
+        // Remove Current task
+        event.target.parentNode.remove();
+
+        // Check number of tasks inside the container
+        if(tasksContainer.childElementCount == 0) {
+            createNoTasks();
+        }
+        // To Best Performance// Calculate Tasks
+        calculateTasks();
+    }
+
+    // Finish Task
+    if(event.target.classList.contains("task-box")) {
+        //Toggle Class finish
+        event.target.classList.toggle("finished");
+        // To Best Performance// Calculate Tasks
+        calculateTasks();
+    }
+
+    // // Calculate Tasks
+    // calculateTasks();
+
+});
+
+// Function to create no tasks message
+function createNoTasks() {
+    // Create message span element
+    let msgSpan = document.createElement("span");
+
+    // Create the text message
+    let msgText = document.createTextNode("No Tasks To Show");
+
+    // Add text to message span element
+    msgSpan.appendChild(msgText);
+
+    // Add Class to message span
+    msgSpan.className = "no-tasks-message";
+
+    // Append the message span element to the tasks container
+    tasksContainer.appendChild(msgSpan);
+}
+
+// Function To calculate tasks
+function calculateTasks() {
+
+    // Calculate all Tasks
+    tasksCount.innerHTML = document.querySelectorAll(".tasks-content .task-box").length;
+
+    // Calculate Completed Tasks
+    tasksCompleted.innerHTML = document.querySelectorAll(".tasks-content .finished").length;
+}
